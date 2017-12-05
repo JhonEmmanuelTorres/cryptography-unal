@@ -18,12 +18,10 @@ def build_message(container)
   message = ''
   container.each do |e|
     e.each do |f|
-      if f
-        message += f
-      end
+      message += f if f
     end
   end
-  return message
+  message
 end
 
 # Constants
@@ -51,11 +49,9 @@ end
 
 print "Enter the message to cipher or decipher:\t"
 message = gets.chomp.split.join.upcase
-if message.length < SIZE ** 2
-  message += 'X' * (SIZE ** 2) - message.length
-end
+message += 'X' * (SIZE**2) - message.length if message.length < SIZE**2
 
-container = Array.new(SIZE).map { |e| e = Array.new(SIZE) }
+container = Array.new(SIZE).map { |_e| e = Array.new(SIZE) }
 
 # Algorithm
 
@@ -85,13 +81,13 @@ else
     container[index / SIZE][index % SIZE] = item
   end
   # aux container to not replace value
-  aux_container = Array.new(SIZE).map { |e| e = Array.new(SIZE, true) }
-  print container,"\n"
+  aux_container = Array.new(SIZE).map { |_e| e = Array.new(SIZE, true) }
+  print container, "\n"
   message = ''
   4.times do
     coordinates.sort!
     coordinates.each do |a, b|
-      if !container[a][b].nil? and aux_container[a][b] # valide the pos is empty
+      if !container[a][b].nil? && aux_container[a][b] # valide the pos is empty
         message += container[a][b]
         aux_container[a][b] = false
       end
